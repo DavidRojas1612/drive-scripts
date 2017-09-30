@@ -29,7 +29,7 @@ def archivo(DRIVE, nombre):
     file = DRIVE.files().list(q=query, fields='files(id,mimeType,name, size)').execute().get('files', {})
     #Lista todos los archivos que coinciden con la busqueda.
     for f in file:
-        print('ID: {} \t {} '.format(f['id'], f['name']))
+        print('ID: {id} \t {name} '.format(**f))
     return file
 
 
@@ -63,7 +63,7 @@ def download(DRIVE, file, file_id):
     try:
         fh = io.FileIO(nombre, mode='wb')
     except:
-        return print('No se encontró el valor')
+        return print('¡¡¡No se encontró el valor!!!')
     downloader = MediaIoBaseDownload(fh, request)
     done = False
     while done is False:
