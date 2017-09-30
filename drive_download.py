@@ -15,8 +15,12 @@ def servicio():
     store = file.Storage('storage.json')
     creds = store.get()
     if not creds or creds.invalid:
-        flow = client.flow_from_clientsecrets('client_id.json', SCOPES)
-        creds = tools.run_flow(flow, store)
+        try:
+            flow = client.flow_from_clientsecrets('client_secret.json', SCOPES)
+            creds = tools.run_flow(flow, store)
+        except:
+            print('No se encontró el archivo client_secret.json')
+            raise SystemExit
     DRIVE = discovery.build('drive', 'v3', http=creds.authorize(Http()))
     return DRIVE
 
