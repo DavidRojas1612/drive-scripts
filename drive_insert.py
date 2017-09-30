@@ -5,14 +5,13 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 from apiclient.http import MediaFileUpload
 import magic
-from sys import argv
 
 def autorizacion():
     '''Funcion que autoriza los permisos en la cuenta de google '''
     SCOPES = 'https://www.googleapis.com/auth/drive.file'
     store = file.Storage('storage.json')
     creds = store.get()
-    if not creds or creds.invalid:
+    if creds is None or creds.invalid:
       flow = client.flow_from_clientsecrets('client_id.json', SCOPES)
       creds = tools.run_flow(flow, store)
     DRIVE = discovery.build('drive', 'v3', http=creds.authorize(Http()))
@@ -38,12 +37,9 @@ def tipoArchivo(ruta):
 	type = mime.from_file(ruta)
 	return type
 
-#ruta = str(argv[1])
 nombre = input('escriba nombre del archivo: ')
 ruta = input('esriba ruta del archivo: ')
 ruta = ruta.replace('\'','')
 tipo = tipoArchivo(ruta)
-
-
 
 push(ruta,nombre,autorizacion(),tipo)
