@@ -4,7 +4,8 @@ from apiclient import discovery
 from apiclient.http import MediaIoBaseDownload
 from httplib2 import Http
 from oauth2client import file, client, tools
-import io
+from os import path, makedirs
+from io import FileIO
 
 # Scopes para autorización
 SCOPES = ('https://www.googleapis.com/auth/drive',
@@ -83,7 +84,9 @@ def download(drive, file, file_id):
         request = drive.files().get_media(fileId=file_id)
     #Si no se ingresa el id, la variable nombre queda en None por lo tanto no se encuentra el id del archivo y no se puede descargar
     try:
-        fh = io.FileIO(nombre, mode='wb')
+        if ((not path.exists('downloads')) and nombre != None):
+            makedirs('downloads')
+        fh = FileIO('downloads/'+nombre, mode='wb')
     except:
         return print('¡¡¡No se encontró el valor!!!')
     downloader = MediaIoBaseDownload(fh, request)
