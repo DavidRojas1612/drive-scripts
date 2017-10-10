@@ -1,5 +1,5 @@
 # La imagen base
-FROM python:3
+FROM python:alpine
 
 # El directorio de trabajo para los comandos (.)
 WORKDIR /usr/src/app
