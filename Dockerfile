@@ -9,4 +9,4 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia todo lo que hay en la carpeta, al directorio de trabajo
-COPY . .
+COPY *.py ./
